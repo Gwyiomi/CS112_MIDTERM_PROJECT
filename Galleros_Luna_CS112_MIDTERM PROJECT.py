@@ -7,15 +7,16 @@ winner = None
 
 print("* * " * 12 + " \033[1;35m Welcome to TIC TAC TOE GAME \033[0m  " + "* * " * 12)
 print(" " * 6 + "Press [1] for Single-Player" + " " * 9 + "Press [2] for MultiPlayer")
-choice = int(input("  -----> "))
+mode = int(input("  -----> "))
 Player1 = ''
 Player2 = ''
 
-if choice == 1:
+# Set player names based on modes
+if mode == 1:
     Player1 = input("  Enter username for player 1: ").upper()  # capitalized
     Player2 = input("  Enter username for player 2: ").upper()
 else:
-    if choice == 2:
+    if mode == 2:
         Player1 = input("  Enter username for player 1: ").upper()
         Player2 = "PC"
         print("  Enter username for player 1: PC")
@@ -68,12 +69,12 @@ time.sleep(1)  # delays 1 second before the game started
 def player_input():
     user_inp = 0
     while True:
-        if currentPlayer == ' X ' or choice == 1 == 2:
+        if currentPlayer == ' X ' or mode == 1 == 2:
             user_inp = int(input("Enter a number 1-9 \033[1;34m" + Player1 + "\033[0m : "))
-        elif currentPlayer == ' X ' or choice == 1:
+        elif currentPlayer == ' X ' or mode == 1:
             user_inp = int(input("Enter a number 1-9 \033[1;31m" + Player2 + "\033[0m : "))
         else:
-            if choice == 2:
+            if mode == 2:
                 print("Enter a number 1-9 \033[1;31m" + Player2 + "\033[0m : ", end="")
                 time.sleep(0.5)
                 current_number = random.randint(1, 9)
