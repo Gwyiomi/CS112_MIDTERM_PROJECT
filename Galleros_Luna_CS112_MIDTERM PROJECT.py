@@ -1,5 +1,5 @@
 import random
-import time  # for delays
+import time  # For delays
 
 currentPlayer = ' X '
 GameRunning = True
@@ -19,7 +19,7 @@ else:
     if mode == 2:
         Player1 = input("  Enter username for player 1: ").upper()
         Player2 = "PC"
-        print("  Enter username for player 1: PC")
+        print("  Enter username for player 2: PC")
 
 
 input("* * " * 14 + " \033[1;31m Press Enter   \033[0m" + "* * " * 14 + "\n")
@@ -30,7 +30,7 @@ message = ("\033[93mMechanics:\033[0m Each turn will enter a number from 1 to 9 
            "\nARE YOU READY \033[1;34m" + Player1 + "\033[0m and \033[1;31m" + Player2 + "\033[0m ?")
 
 
-# listing 9 empty spot as " - " for the board
+# Listing 9 empty spot as " - " for the board
 board = [' - ', ' - ', ' - ',
          ' - ', ' - ', ' - ',
          ' - ', ' - ', ' - ']
@@ -40,7 +40,7 @@ board2 = [' 1 ', ' 2 ', ' 3 ',
           ' 7 ', ' 8 ', ' 9 ']
 
 
-# printing board
+# Printing board
 def print_board(board_):  # this is for the main board of the game
     print(board_[0] + " | " + board_[1] + " | " + board_[2])
     print("-" * 15)
@@ -59,13 +59,13 @@ def print_board2(board2_):  # this is for the basis
     print()
 
 
-print_board2(board2)  # the basis
+print_board2(board2)
 print("\n" + message + "\n" + "* * " * 32)
 input("    " * 13 + " \033[0;31m Press Enter to start   \033[0m\n")
 time.sleep(1)  # delays 1 second before the game started
 
 
-# take the players input
+# Take the player's input
 def player_input():
     user_inp = 0
     while True:
@@ -94,7 +94,7 @@ def player_input():
         print_board(board)
 
 
-# switch the player
+# Switch the player
 def switch_player():
     global currentPlayer
     if currentPlayer == ' X ':
@@ -103,8 +103,8 @@ def switch_player():
         currentPlayer = ' X '
 
 
-# check for wins
-# check if there is a vertical win
+# Check for wins
+# Check if there is a vertical win
 def check_vertical(board_):
     global winner
     if ((board_[0] == board_[3] == board_[6] and board_[0] != " - ")
@@ -114,7 +114,7 @@ def check_vertical(board_):
         return True
 
 
-# check if there is a Horizontal win
+# Check if there is a Horizontal win
 def check_horizontal(board_):
     global winner
     if ((board_[0] == board_[1] == board_[2] and board_[0] != " - "
@@ -124,7 +124,7 @@ def check_horizontal(board_):
         return True
 
 
-# check if there is a Diagonal win
+# Check if there is a Diagonal win
 def check_diagonal(board_):
     global winner
     if ((board_[0] == board_[4] == board_[8] and board_[0] != " - "
@@ -133,7 +133,7 @@ def check_diagonal(board_):
         return True
 
 
-# checks who win
+# Checks who win
 def check_win(board_):
     if check_horizontal(board_) or check_vertical(board_) or check_diagonal(board_):
         player_symbols = {' X ': Player1, ' 0 ': Player2}  # dictionary: naming the winner instead of the "X" and "0"
@@ -141,13 +141,13 @@ def check_win(board_):
         return True
 
 
-# checks if the board is full or tie
+# Checks if the board is full or tie
 def check_tie():
     # checks if all the list in the variable Board not equal to " - ".then, return true. Otherwise, return false
     return all(spot != " - " for spot in board)
 
 
-# check if it's a tie and will stop the game
+# Check if it's a tie and will stop the game
 def game_stop():
     global GameRunning
     if " - " not in board:
@@ -156,29 +156,37 @@ def game_stop():
         GameRunning = False  # the game will stop
 
 
-# the main loop of the game
+# It will restart the game depend on the user's decision
+def play_again():
+    global board, currentPlayer, GameRunning
+    while True:
+        inp = input(str("Do you want to try again? (\033[93mYes\033[0m or \033[1;31mNo\033[0m) "))
+        if inp == "yes":
+            board = [" - "] * 9  # Reset the board. make another the same list of variable Board
+            currentPlayer = ' X '  # Start the next game with Player 1
+            check_tie()
+            break
+        elif inp == "no":
+            game_stop()
+            GameRunning = False
+        else:
+            print(" *" * 18 + " Please answer \033[93mYes\033[0m or \033[1;31mNo\033[0m only!" + " *" * 18)
+            continue
+        break
+
+
+# The main loop of the game
 while GameRunning:
     print_board(board)
     player_input()
     if check_win(board):
         print_board(board)
-        GameRunning = False
+        play_again()
     elif check_tie():
-        while True:
-            print("\n\033[91m It's a TIE! The board is full. \033[0m")
-            print_board(board)
-            inp = input(str("Do you want to try again? (\033[93mYes\033[0m or \033[1;31mNo\033[0m) "))
-            if inp == "yes":
-                board = [" - "] * 9  # Reset the board. make another the same list of variable Board
-                currentPlayer = ' X '  # Start the next game with Player 1
-                check_tie()
-                break
-            elif inp == "no":
-                game_stop()
-                break
-            else:
-                continue
+        print("\n\033[91m It's a TIE! The board is full. \033[0m")
+        print_board(board)
+        play_again()
     else:
         switch_player()
 
-print("\n" + "* * " * 10 + "THANK YOU FOR PLAYING! " + "* * " * 10)
+print("\n" + "* * " * 11 + "THANK YOU FOR PLAYING! " + "* * " * 10)
