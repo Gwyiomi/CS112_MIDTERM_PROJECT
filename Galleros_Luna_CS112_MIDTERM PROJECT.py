@@ -151,7 +151,7 @@ def check_tie():
 def game_stop():
     global GameRunning
     if " - " not in board:
-        print("\n", "* * " * 24, "\n")
+        print("\n" + "* * " * 26, "\n")
         print_board(board)
         GameRunning = False  # the game will stop
 
@@ -189,4 +189,4 @@ while GameRunning:
     else:
         switch_player()
 
-print("\n" + "* * " * 11 + "THANK YOU FOR PLAYING! " + "* * " * 10)
+print("\n" + "* * " * 10 + "THANK YOU FOR PLAYING! " + "* * " * 10)
